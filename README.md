@@ -205,3 +205,4 @@ dingo/api 使用了 [Fractal](http://fractal.thephpleague.com/) 做数据转换�
 ## License
 
 [MIT license](http://opensource.org/licenses/MIT)
+[auth for some actions](https://github.com/dingo/api/issues/597)
