@@ -10,8 +10,11 @@ use App\Transformers\UserTransformer;
 
 class UserController extends BaseController
 {
+	/**
+	 * @desc 单独页面需要授权验证的实现方式
+	 */
 	public function __construct() {
-		$this->middleware('api.auth');
+		//$this->middleware('api.auth');
 		//$this->middleware('api.auth', ['only' => 'index']);
 	}
     /**
@@ -47,7 +50,7 @@ class UserController extends BaseController
      */
     public function index(User $user)
     {
-        $users = User::paginate();
+        $users = User::paginate(10);
 
         return $this->response->paginator($users, new UserTransformer());
     }
@@ -154,7 +157,8 @@ class UserController extends BaseController
      */
     public function userShow()
     {
-        return $this->response->item($this->user(), new UserTransformer());
+		$user = $this->user();
+        return $this->response->item($user, new UserTransformer());
     }
 
     /**

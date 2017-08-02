@@ -97,8 +97,13 @@ $api->version('v1', [
             'uses' => 'UserController@userShow',
         ]);
 
+        $api->post('user', [
+            'as' => 'user.store',
+            'uses' => 'UserController@store',
+        ]);
+
         // update part of me
-        $api->patch('user', [
+        $api->patch('user/{id}', [
             'as' => 'user.update',
             'uses' => 'UserController@patch',
         ]);
@@ -149,6 +154,25 @@ $api->version('v1', [
         $api->delete('posts/{postId}/comments/{id}', [
             'as' => 'posts.comments.destroy',
             'uses' => 'CommentController@destroy',
+        ]);
+
+
+		// menus
+        $api->get('menus', [
+            'as' => 'menus.list',
+            'uses' => 'MenuController@index',
+        ]);
+        $api->post('menus', [
+            'as' => 'menus.store',
+            'uses' => 'MenuController@store',
+        ]);
+		$api->patch('menus/{id}', [
+            'as' => 'menus.update',
+            'uses' => 'MenuController@update',
+        ]);
+		$api->delete('menus/{id}', [
+            'as' => 'menus.destroy',
+            'uses' => 'MenuController@destroy',
         ]);
     });
 });
