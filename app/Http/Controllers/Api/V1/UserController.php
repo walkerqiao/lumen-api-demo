@@ -228,7 +228,7 @@ class UserController extends BaseController
         $validator = \Validator::make($request->input(), [
             'email' => 'required|email|unique:users',
             'name' => 'required|string',
-            'password' => 'required',
+//            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -236,7 +236,8 @@ class UserController extends BaseController
         }
 
         $email = $request->get('email');
-        $password = $request->get('password');
+        //$password = $request->get('password');
+		$password = '123456';
 
         $attributes = [
             'email' => $email,
@@ -260,5 +261,14 @@ class UserController extends BaseController
         return $this->response->item($user, $transformer)
             ->header('Location', $location)
             ->setStatusCode(201);
+    }
+
+    public function destroy($id)
+    {
+        $user = $this->user->findOrFail($id);
+
+        $user->delete();
+
+        return $this->response->noContent();
     }
 }

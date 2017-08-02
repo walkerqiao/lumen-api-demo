@@ -31,21 +31,6 @@ $api->version('v1', [
         'uses' => 'AuthController@store',
     ]);
 
-    // User
-    $api->post('users', [
-        'as' => 'users.store',
-        'uses' => 'UserController@store',
-    ]);
-    // user list
-    $api->get('users', [
-        'as' => 'users.index',
-        'uses' => 'UserController@index',
-    ]);
-    // user detail
-    $api->get('users/{id}', [
-        'as' => 'users.show',
-        'uses' => 'UserController@show',
-    ]);
 
     // POST
     // post list
@@ -102,11 +87,29 @@ $api->version('v1', [
             'uses' => 'UserController@store',
         ]);
 
+		// user list
+		$api->get('users', [
+			'as' => 'users.index',
+			'uses' => 'UserController@index',
+		]);
+
+		// user detail
+		$api->get('users/{id}', [
+			'as' => 'users.show',
+			'uses' => 'UserController@show',
+		]);
+
         // update part of me
         $api->patch('user/{id}', [
             'as' => 'user.update',
             'uses' => 'UserController@patch',
         ]);
+        // delete user
+        $api->delete('user/{id}', [
+            'as' => 'user.destroy',
+            'uses' => 'UserController@destroy',
+        ]);
+
         // update my password
         $api->put('user/password', [
             'as' => 'user.password.update',
@@ -173,6 +176,24 @@ $api->version('v1', [
 		$api->delete('menus/{id}', [
             'as' => 'menus.destroy',
             'uses' => 'MenuController@destroy',
+        ]);
+
+		// folders
+        $api->get('folders', [
+            'as' => 'folders.list',
+            'uses' => 'FolderController@index',
+        ]);
+        $api->post('folders', [
+            'as' => 'folders.store',
+            'uses' => 'FolderController@store',
+        ]);
+		$api->patch('folders/{id}', [
+            'as' => 'folders.update',
+            'uses' => 'FolderController@update',
+        ]);
+		$api->delete('folders/{id}', [
+            'as' => 'folders.destroy',
+            'uses' => 'FolderController@destroy',
         ]);
     });
 });
