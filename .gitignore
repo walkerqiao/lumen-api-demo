@@ -5,3 +5,4 @@
 .php*
 !.php_cs.dist
 storage/logs
+storage/files

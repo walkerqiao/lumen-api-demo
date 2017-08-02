@@ -102,11 +102,16 @@ $api->version('v1', [
         // update part of me
         $api->patch('user/{id}', [
             'as' => 'user.update',
-            'uses' => 'UserController@patch',
+            'uses' => 'UserController@update',
         ]);
         // delete user
         $api->delete('user/{id}', [
             'as' => 'user.destroy',
+            'uses' => 'UserController@destroy',
+        ]);
+        // delete user
+        $api->delete('users/{id}', [
+            'as' => 'users.destroy',
             'uses' => 'UserController@destroy',
         ]);
 
@@ -176,6 +181,24 @@ $api->version('v1', [
 		$api->delete('menus/{id}', [
             'as' => 'menus.destroy',
             'uses' => 'MenuController@destroy',
+        ]);
+
+		// files
+        $api->get('folders/{fid}/files', [
+            'as' => 'files.list',
+            'uses' => 'FileController@index',
+        ]);
+        $api->post('folders/{fid}/files', [
+            'as' => 'files.store',
+            'uses' => 'FileController@store',
+        ]);
+		$api->patch('folders/{fid}/files/{id}', [
+            'as' => 'files.update',
+            'uses' => 'FileController@update',
+        ]);
+		$api->delete('folders/{fid}/files/{id}', [
+            'as' => 'files.destroy',
+            'uses' => 'FileController@destroy',
         ]);
 
 		// folders

@@ -95,6 +95,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Illuminate\Redis\RedisServiceProvider::class);
 //$app->register(App\Providers\EventServiceProvider::class);
+$app->register(GrahamCampbell\Flysystem\FlysystemServiceProvider::class);
 
 app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app) {
     return new Dingo\Api\Auth\Provider\JWT($app['Tymon\JWTAuth\JWTAuth']);

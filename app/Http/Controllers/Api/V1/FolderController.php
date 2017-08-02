@@ -38,7 +38,7 @@ class FolderController extends BaseController
             return $this->errorBadRequest($validator);
         }
 
-        $attributes = $request->only('name');
+        $attributes = $request->only('name', 'desc', 'pid');
         $folder = $this->folder->create($attributes);
 
         // 返回 201 加数据
@@ -61,7 +61,7 @@ class FolderController extends BaseController
             return $this->errorBadRequest($validator);
         }
 
-        $folder->update($request->only('name'));
+        $folder->update($request->only('name', 'desc'));
 
         return $this->response->noContent();
     }

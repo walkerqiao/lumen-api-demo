@@ -263,6 +263,23 @@ class UserController extends BaseController
             ->setStatusCode(201);
     }
 
+	public function update($id, Request $request)
+    {
+        $user = $this->user->findOrFail($id);
+
+        $validator = \Validator::make($request->input(), [
+            'name' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->errorBadRequest($validator);
+        }
+
+        $user->update($request->only('email', 'name', 'role'));
+
+        return $this->response->noContent();
+    }
+
     public function destroy($id)
     {
         $user = $this->user->findOrFail($id);
