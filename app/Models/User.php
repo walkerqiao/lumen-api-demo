@@ -28,7 +28,8 @@ class User extends BaseModel implements AuthenticatableContract, JWTSubject
     // jwt 需要实现的方法
     public function getJWTIdentifier()
     {
-        return $this->getKey();
+		$key = $this->getKey();
+        return $key;
     }
 
     // jwt 需要实现的方法

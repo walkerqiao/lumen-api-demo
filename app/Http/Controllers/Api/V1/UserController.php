@@ -10,6 +10,10 @@ use App\Transformers\UserTransformer;
 
 class UserController extends BaseController
 {
+	public function __construct() {
+		$this->middleware('api.auth');
+		//$this->middleware('api.auth', ['only' => 'index']);
+	}
     /**
      * @api {get} /users 用户列表(user list)
      * @apiDescription 用户列表(user list)
