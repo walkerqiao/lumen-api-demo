@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\File as FileModel;
+use App\Models\Folder;
 use Illuminate\Http\Request;
 use App\Transformers\FileTransformer;
 use GrahamCampbell\Flysystem\Facades\Flysystem;
@@ -12,14 +13,40 @@ class FileController extends BaseController
 {
     private $file;
 
-    public function __construct(FileModel $file)
+    public function __construct(FileModel $file, Folder $folder)
     {
         $this->file = $file;
+		$this->folder = $folder;
     }
 
-    public function index()
+    public function index($fid, Request $request)
     {
-        $files = $this->file->paginate(10);
+		$folder = $this->folder->findOrFail($fid);
+        $files = $this->file->where(['fid' => $fid]);
+
+        $currentCursor = $request->get('cursor');
+
+        if ($currentCursor !== null) {
+            $currentCursor = (int) $request->get('cursor', null);
+            // how to use previous ??
+            // $prevCursor = $request->get('previous', null);
+            $limit = $request->get('limit', 10);
+
+            $files = $files->where([['id', '>', $currentCursor]])->limit($limit)->get();
+
+            $nextCursor = $files->last()->id;
+            $prevCursor = $currentCursor;
+
+            $cursorPatination = new Cursor($currentCursor, $prevCursor, $nextCursor, $files->count());
+
+            return $this->response->collection($files, new FileTransformer(), [], function ($resource) use ($cursorPatination) {
+                $resource->setCursor($cursorPatination);
+            });
+        } else {
+            $files = $files->paginate(10);
+
+            return $this->response->paginator($files, new FileTransformer());
+        }
 
         return $this->response->paginator($files, new FileTransformer());
     }
