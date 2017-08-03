@@ -6,3 +6,6 @@
 !.php_cs.dist
 storage/logs
 storage/files
+dist
+dist.tar.gz
+./index.html
